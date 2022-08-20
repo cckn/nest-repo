@@ -1,4 +1,4 @@
-import { Injectable, Provider } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { EmailService } from 'src/email/email.service';
 import { v1 as uuid } from 'uuid';
 
