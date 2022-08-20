@@ -5,11 +5,8 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get(':name/:id')
-  getHello(@Param('name') name: string, @Param('id') id: string) {
-    console.log(`name: ${name} typeof: ${typeof name}`);
-    console.log(`id: ${id} type: ${typeof id}`);
-
+  @Get()
+  getHello() {
     return this.appService.getHello();
   }
 
