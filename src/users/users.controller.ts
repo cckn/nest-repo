@@ -1,8 +1,9 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CreateUserDto } from './dto/users.createUser.dto';
-import { LoginDto } from './dto/users.login.dto';
-import { VerifyEmailDto } from './dto/users.verifyEmail.dto';
+
 import { UsersService } from './users.service';
+import { LoginDto } from './dto/users.login.dto';
+import { CreateUserDto } from './dto/users.createUser.dto';
+import { VerifyEmailDto } from './dto/users.verifyEmail.dto';
 
 @Controller('users')
 export class UsersController {
@@ -11,13 +12,16 @@ export class UsersController {
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     console.log('createUserDto', createUserDto);
-    return createUserDto;
+    const { name, password, email } = createUserDto;
+
+    return this.usersService.create(name, password, email);
   }
 
   @Post('email-verify')
   verifyEmail(@Body() verifyEmailDto: VerifyEmailDto) {
-    console.log('verifyEmail', verifyEmailDto);
-    return verifyEmailDto;
+    const { signupVerifyToken } = verifyEmailDto;
+
+    this.usersService.verifyEmail(signupVerifyToken);
   }
 
   @Post('login')
@@ -29,6 +33,6 @@ export class UsersController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     console.log('findOne', id);
-    return id;
+    return this.usersService.getUserInfo(id);
   }
 }
